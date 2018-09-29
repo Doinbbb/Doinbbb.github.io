@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.zoomer {
+				width: 450px;
+				border: 1px solid #000;
+			    
+			}
+			
+			img {
+				width: 100%;
+			}
+			
+			.zoomerHandler {
+				width: 150px;
+				height: 150px;
+				border-radius: 50%;
+				position: absolute;
+				margin: -75px 0 0 -75px;
+				background: url(img/FE.jpg);
+				background-position: -100px -100px;
+				opacity: 0;
+				transition: opacity .5s;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="zoomer">
+			<img src="img/FE.jpg" />
+			<div class="zoomerHandler"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var zm = document.getElementsByClassName("zoomer")[0];
+		var zmh = document.getElementsByClassName("zoomerHandler")[0];
+
+		function movezm(event) {
+			var event = event || window.event;
+			var zmmerx = zm.getBoundingClientRect().left;
+			var zmmery = zm.getBoundingClientRect().top;
+			var zmhmerx = zmh.getBoundingClientRect().left;
+			var zmhmery = zmh.getBoundingClientRect().top;
+			var zmhocx = zmhmerx - zmmerx;
+			var zmhocy = zmhmery - zmmery;
+			zmh.style.top = event.pageY - zmmery + "px";
+			zmh.style.left = event.pageX - zmmerx + "px";
+			zmh.style.backgroundPositionX = -2.4422 * zmhocx - 75 + "px";
+			zmh.style.backgroundPositionY = -2.4422 * zmhocy - 75 + "px";
+
+		}
+
+		function overmove() {
+			zmh.style.opacity = 1;
+
+			zm.addEventListener("mousemove", movezm);
+		}
+
+		function outmove() {
+			zmh.style.opacity = 0;
+			console.log("out");
+			zm.removeEventListener("mousemove", movezm);
+		}
+		zm.addEventListener("mouseover", overmove);
+		zm.addEventListener("mouseout", outmove);
+	</script>
+
+</html>
